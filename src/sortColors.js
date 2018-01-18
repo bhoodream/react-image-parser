@@ -20,7 +20,5 @@ export default function ({ sortType, sortDir }, colors) {
         b[type] - a[type] :
         a[type] - b[type];
 
-    console.log(colors);
-
     return colors.sort(sortByType(sortType));
 }

@@ -17,8 +17,9 @@ import {
 class ReactImageParser extends PureComponent {
     static propTypes = {
         img: PropTypes.string.isRequired,
-        onColorsParsed: PropTypes.func,
-        colorAlpha: PropTypes.number,
+        onImageParsed: PropTypes.func,
+        minColorAlpha: PropTypes.number,
+        colorAlphaPrecision: PropTypes.number,
         colorDifference: PropTypes.number,
         sortType: PropTypes.string,
         maxImgSideSize: PropTypes.number
@@ -26,8 +27,9 @@ class ReactImageParser extends PureComponent {
 
     static defaultProps = {
         img: '',
-        onColorsParsed: () => {},
+        onImageParsed: () => {},
         minColorAlpha: COLOR_ALPHA_MAX,
+        colorAlphaPrecision:COLOR_ALPHA_PRECISION,
         colorDifference: COLOR_DIFFERENCE_DEFAULT,
         sortType: SORT_TYPE_COUNT,
         sortDir: SORT_DIR_DESC,
@@ -50,22 +52,21 @@ class ReactImageParser extends PureComponent {
     parseColorsFromData(data = []) {
         const {
             minColorAlpha,
+            colorAlphaPrecision,
             colorDifference,
             sortType,
             sortDir,
-            onColorsParsed
+            onImageParsed
         } = this.props;
         const dataLen = data.length;
         const rgbaKeyArrMirror = {};
         const rgbaKeyArr = [];
-        const imgColors = [];
-        const usedColors = [];
         const red = 0, green = 1, blue = 2, alpha = 3, colorStep = 4;
 
         for (let i = 0; i < dataLen; i += colorStep) {
             const dataAlpha = Math.round(
-                (data[i + alpha] / COLOR_VAL_MAX) * COLOR_ALPHA_PRECISION
-            ) / COLOR_ALPHA_PRECISION;
+                (data[i + alpha] / COLOR_VAL_MAX) * colorAlphaPrecision
+            ) / colorAlphaPrecision;
             const isAlphaOk =
                 dataAlpha > 0
                 && dataAlpha >= minColorAlpha;
@@ -92,6 +93,8 @@ class ReactImageParser extends PureComponent {
         }
 
         const sortedColors = sortColors({ sortType, sortDir }, rgbaKeyArr);
+        const colors = [];
+        const usedColors = [];
 
         sortedColors.forEach(colorItem => {
             let rgbaArr = colorItem.rgbaKey.split(',').map(Number),
@@ -114,11 +117,13 @@ class ReactImageParser extends PureComponent {
 
             if (isValid) {
                 usedColors.push(colorItem.rgbaKey);
-                imgColors.push(rgbaArr);
+                colors.push(rgbaArr);
             }
         });
 
-        onColorsParsed(imgColors);
+        onImageParsed({
+            colors
+        });
     }
 
     onImgLoad(e) {
@@ -139,7 +144,7 @@ class ReactImageParser extends PureComponent {
         } = this.state;
 
         return (
-            <div>
+            <div style={{display: 'none'}}>
                 {imgElem && <CanvasController
                     imgElem={imgElem}
                     sideSize={maxImgSideSize}
@@ -148,7 +153,6 @@ class ReactImageParser extends PureComponent {
                 {!imgElem && img && <img
                     src={img}
                     alt={'ParseImageColorsController img'}
-                    style={{display: 'none'}}
                     onLoad={this.onImgLoad}
                 />}
             </div>

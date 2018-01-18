@@ -55,7 +55,6 @@ class CanvasController extends PureComponent {
 
     render() {
         return <canvas
-            style={{display: 'none'}}
             ref={canvas => this.canvas = canvas}
         />;
     }
