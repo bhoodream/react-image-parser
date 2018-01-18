@@ -17,7 +17,7 @@ import {
 class ReactImageParser extends PureComponent {
     static propTypes = {
         img: PropTypes.string.isRequired,
-        onImageParsed: PropTypes.func,
+        onColorsParsed: PropTypes.func,
         minColorAlpha: PropTypes.number,
         colorAlphaPrecision: PropTypes.number,
         colorDifference: PropTypes.number,
@@ -27,7 +27,7 @@ class ReactImageParser extends PureComponent {
 
     static defaultProps = {
         img: '',
-        onImageParsed: () => {},
+        onColorsParsed: null,
         minColorAlpha: COLOR_ALPHA_MAX,
         colorAlphaPrecision:COLOR_ALPHA_PRECISION,
         colorDifference: COLOR_DIFFERENCE_DEFAULT,
@@ -56,7 +56,7 @@ class ReactImageParser extends PureComponent {
             colorDifference,
             sortType,
             sortDir,
-            onImageParsed
+            onColorsParsed
         } = this.props;
         const dataLen = data.length;
         const rgbaKeyArrMirror = {};
@@ -121,9 +121,7 @@ class ReactImageParser extends PureComponent {
             }
         });
 
-        onImageParsed({
-            colors
-        });
+        onColorsParsed(colors);
     }
 
     onImgLoad(e) {
@@ -136,16 +134,19 @@ class ReactImageParser extends PureComponent {
 
     render() {
         const {
-            maxImgSideSize
+            maxImgSideSize,
+            onColorsParsed
         } = this.props;
         const {
             img,
             imgElem
         } = this.state;
 
+        const shouldParseColors = typeof onColorsParsed === 'function';
+
         return (
             <div style={{display: 'none'}}>
-                {imgElem && <CanvasController
+                {shouldParseColors && imgElem && <CanvasController
                     imgElem={imgElem}
                     sideSize={maxImgSideSize}
                     onImageData={this.parseColorsFromData}
