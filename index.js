@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import parseColorsFromData from './src/parseColorsFromData';
 import CanvasController from './src/CanvasController';
-import sortColors from './src/sortColors';
 
 import {
     COLOR_ALPHA_MAX,
@@ -11,7 +10,6 @@ import {
     COLOR_DIFFERENCE_DEFAULT,
     SORT_TYPE_COUNT,
     SORT_DIR_DESC,
-    COLOR_VAL_MAX,
     CANVAS_SIDE_DEFAULT
 } from "./src/Const";
 
