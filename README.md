@@ -1,4 +1,11 @@
 # React-Image-Parser
+With this component, you can easily analyze the image and get all the colors.
+
+Install:
+```
+npm i react-image-parser
+```
+
 Add:
 
 ```javascript
