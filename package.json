@@ -15,7 +15,7 @@
     "colors",
     "images"
   ],
-  "author": "Vadim Fedorov",
+  "author": "Vadim Fedorov <bhoodream@yandex.ru>",
   "license": "ISC",
   "peerDependencies": {
     "react-dom": ">15.0.1",
