@@ -2,7 +2,7 @@
 With this component, you can easily analyze the image and get all the colors.
 
 Install:
-```
+```bash
 npm i react-image-parser
 ```
 
