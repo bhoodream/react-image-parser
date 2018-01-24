@@ -29,7 +29,7 @@ Use:
 
 Props:
 
-| Prop        | Type           | Required  |  Default |  Description |
+| Name        | Type           | Required  |  Default |  Description |
 |:------------|:---------------|:----------|:---------|:-------------|
 | img        | String | true  |  null |  Path to image. |
 | minColorAlpha | Number | false  |  1 | Minimum alpha with which to take colors. |
