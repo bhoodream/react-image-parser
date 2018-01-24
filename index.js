@@ -25,7 +25,7 @@ class ReactImageParser extends PureComponent {
     };
 
     static defaultProps = {
-        img: '',
+        img: null,
         onColorsParsed: null,
         minColorAlpha: COLOR_ALPHA_MAX,
         colorAlphaPrecision:COLOR_ALPHA_PRECISION,
