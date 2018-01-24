@@ -31,14 +31,14 @@ Props:
 
 | Name        | Type           | Required  |  Default |  Description |
 |:------------|:---------------|:----------|:---------|:-------------|
-| img        | String | true  |  null |  Path to image. |
-| minColorAlpha | Number | false  |  1 | Minimum alpha with which to take colors. |
-| colorAlphaPrecision | Number | false  |  100 | Precision of alpha to which to round off. |
-| colorDifference | Number | false  |  120 | The difference between the colors that will be taken. Max is 765. |
-| sortType | String | false |  'count' | On what parameter the sorting will be performed. Types: count, alpha. |
-| sortDir | Number | false  |  120 | The difference between the colors that will be taken. Max is 765. |
-| maxImgSideSize | Number | false  |  400 | The maximum size of the sides of the canvas on which the image will be analyzed. |
-| onColorsParsed | Function | false  |  null | The function in which the extracted colors will be passed. |
+| img        | String | Yes  |  null |  Path to image. |
+| minColorAlpha | Number | No  |  1 | Minimum alpha with which to take colors. |
+| colorAlphaPrecision | Number | No  |  100 | Precision of alpha to which to round off. |
+| colorDifference | Number | No  |  120 | The difference between the colors that will be taken. Max is 765. |
+| sortType | String | No |  'count' | On what parameter the sorting will be performed. Types: count, alpha. |
+| sortDir | String | No  |  'desc' | Sort direction. Types: desc, asc; |
+| maxImgSideSize | Number | No  |  400 | The maximum size of the sides of the canvas on which the image will be analyzed. |
+| onColorsParsed | Function | No  |  null | The function in which the extracted colors will be passed. |
 
 
 Colors:
