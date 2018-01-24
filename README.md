@@ -1,18 +1,18 @@
 # React-Image-Parser
 With this component, you can easily analyze the image and get all the colors.
 
-Install:
+####Install:
 ```bash
 npm i react-image-parser
 ```
 
-Add:
+####Add:
 
 ```javascript
 import ImageParser from 'react-image-parser';
 ```
 
-Use:
+####Use:
 
 ```javascript
 <ImageParser
@@ -27,7 +27,7 @@ Use:
 />
 ```
 
-Props:
+####Props:
 
 | Name        | Type           | Required  |  Default |  Description |
 |:------------|:---------------|:----------|:---------|:-------------|
@@ -41,6 +41,6 @@ Props:
 | onColorsParsed | Function | No  |  null | The function in which the extracted colors will be passed. |
 
 
-Colors:
+####Colors:
 
 ![Colors](https://i.imgur.com/1fzW3Ju.jpg)
