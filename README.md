@@ -31,12 +31,12 @@ import ImageParser from 'react-image-parser';
 
 | Name        | Type           | Required  |  Default |  Description |
 |:------------|:---------------|:----------|:---------|:-------------|
-| img        | String | Yes  |  null |  Path to image. |
-| minColorAlpha | Number | No  |  1 | Minimum alpha with which to take colors. |
-| colorAlphaPrecision | Number | No  |  100 | Precision of alpha to which to round off. |
-| colorDifference | Number | No  |  120 | The difference between the colors that will be taken. Max is 765. |
-| sortType | String | No |  'count' | On what parameter the sorting will be performed. Types: count, alpha. |
-| sortDir | String | No  |  'desc' | Sort direction. Types: desc, asc; |
+| img        | String | Yes  |  null |  Path to image. For example, './my/image/path.png' |
+| minColorAlpha | Number | No  |  1 | Minimum alpha with which to take colors. From 0 to 1. |
+| colorAlphaPrecision | Number | No  |  100 | Precision of alpha to which to round off. If 100, you get 0,01.|
+| colorDifference | Number | No  |  120 | The difference between the colors that will be taken. From 0 to 765. |
+| sortType | String | No |  'count' | On what parameter the sorting will be performed. Values: count, alpha. |
+| sortDir | String | No  |  'desc' | Sort direction. Values: desc, asc; |
 | maxImgSideSize | Number | No  |  400 | The maximum size of the sides of the canvas on which the image will be analyzed. |
 | onColorsParsed | Function | No  |  null | The function in which the extracted colors will be passed. |
 

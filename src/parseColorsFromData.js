@@ -1,6 +1,30 @@
 import sortColors from "./sortColors";
 import {COLOR_VAL_MAX} from "./Const";
 
+function getColorAlpha(data, index, precision) {
+    const alpha = 3;
+
+    return Math.round((data[index + alpha] / COLOR_VAL_MAX) * precision) / precision;
+}
+
+function getRgbaKey(data, index, alpha) {
+    const red = 0, green = 1, blue = 2;
+
+    return [data[index + red], data[index + green], data[index + blue], alpha].join(',');
+}
+
+function getColorObj(colorsArr, rgbaKey, alpha) {
+    let color = colorsArr[rgbaKey];
+
+    if (color) {
+        color.count += 1;
+
+        return color;
+    }
+
+    return { rgbaKey, alpha, count: 1 };
+}
+
 export default (props, data = []) => {
     const {
         minColorAlpha,
@@ -13,34 +37,22 @@ export default (props, data = []) => {
     const dataLen = data.length;
     const rgbaKeyArrMirror = {};
     const rgbaKeyArr = [];
-    const red = 0, green = 1, blue = 2, alpha = 3, colorStep = 4;
+    const colorStep = 4;
 
     for (let i = 0; i < dataLen; i += colorStep) {
-        const dataAlpha = Math.round(
-            (data[i + alpha] / COLOR_VAL_MAX) * colorAlphaPrecision
-        ) / colorAlphaPrecision;
-        const isAlphaOk =
-            dataAlpha > 0
-            && dataAlpha >= minColorAlpha;
+        const colorAlpha =  getColorAlpha(data, i, colorAlphaPrecision);
+        const isAlphaOk = colorAlpha > 0 && colorAlpha >= minColorAlpha;
 
-        if (isAlphaOk) {
-            const rgbaKey = [
-                data[i + red],
-                data[i + green],
-                data[i + blue],
-                dataAlpha
-            ].join(',');
+        if (!isAlphaOk) {
+            continue;
+        }
 
-            if (rgbaKeyArrMirror[rgbaKey]) {
-                rgbaKeyArrMirror[rgbaKey].count += 1
-            } else {
-                rgbaKeyArrMirror[rgbaKey] = {
-                    rgbaKey,
-                    alpha: dataAlpha,
-                    count: 1
-                };
-                rgbaKeyArr.push(rgbaKeyArrMirror[rgbaKey]);
-            }
+        const rgbaKey = getRgbaKey(data, i, colorAlpha);
+
+        rgbaKeyArrMirror[rgbaKey] = getColorObj(rgbaKeyArrMirror, rgbaKey, colorAlpha);
+
+        if (rgbaKeyArrMirror[rgbaKey].count === 1) {
+            rgbaKeyArr.push(rgbaKeyArrMirror[rgbaKey]);
         }
     }
 
