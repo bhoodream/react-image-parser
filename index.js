@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import parseColorsFromData from './src/parseColorsFromData';
+import parseSizeFromImg from './src/parseSizeFromImg';
 import CanvasController from './src/CanvasController';
 
 import {
@@ -52,9 +53,19 @@ class ReactImageParser extends PureComponent {
         parseColorsFromData(this.props, data);
     }
 
+    parseSize(img) {
+        const { onSizeParsed } = this.props;
+        const shouldParseSize = typeof onSizeParsed === 'function';
+
+        if (shouldParseSize) {
+            onSizeParsed(parseSizeFromImg(img));
+        }
+    }
+
     onImgLoad(e) {
         const imgElem = e.target;
 
+        this.parseSize(imgElem);
         this.setState({
             imgElem
         });
