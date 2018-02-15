@@ -2,18 +2,18 @@
 With this component, you can easily parse the image and get all the data you need.  
 Now is: colors, size.
 
-####Install:
+#### Install:
 ```bash
 npm i react-image-parser
 ```
 
-####Add:
+#### Add:
 
 ```javascript
 import ImageParser from 'react-image-parser';
 ```
 
-####Use:
+#### Use:
 
 ```javascript
 <ImageParser
@@ -29,7 +29,7 @@ import ImageParser from 'react-image-parser';
 />
 ```
 
-####Props:
+#### Props:
 
 | Name        | Type           | Required  |  Default |  Description |
 |:------------|:---------------|:----------|:---------|:-------------|
@@ -44,10 +44,10 @@ import ImageParser from 'react-image-parser';
 | onSizeParsed | Function | No  |  null | The function in which the extracted size will be passed. |
 
 
-####Colors:
+#### Colors:
 
 ![Colors](https://i.imgur.com/1fzW3Ju.jpg)
 
-####Size:
+#### Size:
 
 ![Colors](https://i.imgur.com/HxVWMjM.jpg)
