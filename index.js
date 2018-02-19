@@ -6,15 +6,13 @@ import CanvasController from './src/CanvasController';
 class ReactImageParser extends PureComponent {
     static propTypes = {
         img: pt.string.isRequired,
-        onImageParsed: pt.func,
         maxImgSideSize: pt.number,
-        isImageParsed: pt.bool
+        onImageParsed: pt.func
     };
 
     static defaultProps = {
         img: null,
-        onImageParsed: () => {},
-        isImageParsed: false
+        onImageParsed: () => {}
     };
 
     constructor(...args) {
