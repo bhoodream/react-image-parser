@@ -1,5 +1,5 @@
 # React-Image-Parser
-With this component, you can easily parse the image data.  
+With this component you can easily parse the image data.  
 
 #### Install:
 ```bash
@@ -27,9 +27,9 @@ import ImageParser from 'react-image-parser';
 | Name        | Type           | Required  |  Default |  Description |
 |:------------|:---------------|:----------|:---------|:-------------|
 | img        | String | Yes  |  null |  Path to image. For example, './my/image/path.png' |
-| maxImgSideSize | Number | No  |  image bigger side size | The maximum size of the sides of the canvas on which the image will be parsed. |
+| maxImgSideSize | Number | No  |  bigger side of image | The maximum size of the sides of the canvas on which the image will be parsed. |
 | onImageData | Function | No  |  null | The function in which the parsed data will be passed. |
 
 #### Data:
 
-![Data](https://i.imgur.com/BeUtDPT.png)
+![Data](https://i.imgur.com/Z2tYLJR.png)
