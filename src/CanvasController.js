@@ -1,17 +1,14 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-
-import { CANVAS_SIDE_DEFAULT } from "./Const";
+import pt from 'prop-types';
 
 class CanvasController extends PureComponent {
     static propTypes = {
-        sideSize: PropTypes.number,
-        imgElem: PropTypes.instanceOf(Element).isRequired,
-        onImageData: PropTypes.func
+        sideSize: pt.number,
+        imgElem: pt.instanceOf(Element).isRequired,
+        onImageData: pt.func
     };
 
     static defaultProps = {
-        sideSize: CANVAS_SIDE_DEFAULT,
         imgElem: null,
         onImageData: () => {}
     };
@@ -20,22 +17,35 @@ class CanvasController extends PureComponent {
         this.getImageData();
     }
 
-    getCanvasSideSizes({ width = 0, height = 0 }) {
-        const { sideSize } = this.props;
+    getCanvasSideSizes(imgElem, sideSize = Math.max(imgElem.naturalWidth, imgElem.naturalHeight)) {
+        const { naturalWidth: width, naturalHeight: height } = imgElem;
         const widthIsBigger = width > height;
 
         return {
-            width: widthIsBigger ? sideSize : width * (sideSize / height),
-            height: widthIsBigger ? height * (sideSize / width) : sideSize
+            width: widthIsBigger ? sideSize : sideSize * (width / height),
+            height: widthIsBigger ? sideSize * (height / width) : sideSize
         };
     }
 
     getImageData() {
+        if (!this.props.imgElem) {
+            console.error('CanvasController: no imgElem!');
+
+            return;
+        }
+
+        if (this.props.sideSize <= 0) {
+            console.error('CanvasController: sideSize can\'t be lower or equal to zero!');
+
+            return;
+        }
+
         const {
             imgElem,
+            sideSize,
             onImageData
         } = this.props;
-        const { width, height } = this.getCanvasSideSizes(imgElem || {});
+        const { width, height } = this.getCanvasSideSizes(imgElem, sideSize);
         const ctx = this.canvas.getContext("2d");
         let imageData = [];
 

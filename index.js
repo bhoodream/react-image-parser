@@ -1,99 +1,83 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import pt from 'prop-types';
 
-import parseColorsFromData from './src/parseColorsFromData';
-import parseSizeFromImg from './src/parseSizeFromImg';
 import CanvasController from './src/CanvasController';
-
-import {
-    COLOR_ALPHA_MAX,
-    COLOR_ALPHA_PRECISION,
-    COLOR_DIFFERENCE_DEFAULT,
-    SORT_TYPE_COUNT,
-    SORT_DIR_DESC,
-    CANVAS_SIDE_DEFAULT
-} from "./src/Const";
 
 class ReactImageParser extends PureComponent {
     static propTypes = {
-        img: PropTypes.string.isRequired,
-        onColorsParsed: PropTypes.func,
-        minColorAlpha: PropTypes.number,
-        colorAlphaPrecision: PropTypes.number,
-        colorDifference: PropTypes.number,
-        sortType: PropTypes.string,
-        maxImgSideSize: PropTypes.number
+        img: pt.string.isRequired,
+        onImageParsed: pt.func,
+        maxImgSideSize: pt.number,
+        isImageParsed: pt.bool
     };
 
     static defaultProps = {
         img: null,
-        onColorsParsed: null,
-        minColorAlpha: COLOR_ALPHA_MAX,
-        colorAlphaPrecision:COLOR_ALPHA_PRECISION,
-        colorDifference: COLOR_DIFFERENCE_DEFAULT,
-        sortType: SORT_TYPE_COUNT,
-        sortDir: SORT_DIR_DESC,
-        maxImgSideSize: CANVAS_SIDE_DEFAULT
+        onImageParsed: () => {},
+        isImageParsed: false
     };
 
     constructor(...args) {
         super(...args);
 
-        const {img} = this.props;
+        const { img } = this.props;
 
         this.state = {
-            img
+            img,
+            style: { }
         };
 
         this.onImgLoad = this.onImgLoad.bind(this);
-        this.parseColorsFromData = this.parseColorsFromData.bind(this);
+        this.onImgError = this.onImgError.bind(this);
+        this.imageParsed = this.imageParsed.bind(this);
     }
 
-    parseColorsFromData(data = []) {
-        parseColorsFromData(this.props, data);
-    }
-
-    parseSize(img) {
-        const { onSizeParsed } = this.props;
-        const shouldParseSize = typeof onSizeParsed === 'function';
-
-        if (shouldParseSize) {
-            onSizeParsed(parseSizeFromImg(img));
-        }
+    imageParsed(data = []) {
+        this.props.onImageParsed(data);
+        this.setState({
+            isImageParsed: true
+        });
     }
 
     onImgLoad(e) {
-        const imgElem = e.target;
-
-        this.parseSize(imgElem);
         this.setState({
-            imgElem
+            imgElem: e.target
         });
+    }
+
+    onImgError(src) {
+        return () => console.error(`react-image-parser: error on load image "${src}"`, );
     }
 
     render() {
         const {
             maxImgSideSize,
-            onColorsParsed
+            onImageParsed
         } = this.props;
         const {
             img,
-            imgElem
+            imgElem,
+            isImageParsed
         } = this.state;
 
-        const shouldParseColors = typeof onColorsParsed === 'function';
+        if (isImageParsed) {
+            return null;
+        }
+
+        const shouldParseImage = typeof onImageParsed === 'function' && !!imgElem;
 
         return (
-            <div style={{display: 'none'}}>
-                {shouldParseColors && imgElem && <CanvasController
+            <div style={this.state.style}>
+                {shouldParseImage && <CanvasController
                     imgElem={imgElem}
                     sideSize={maxImgSideSize}
-                    onImageData={this.parseColorsFromData}
+                    onImageData={this.imageParsed}
                 />}
                 {!imgElem && img && <img
                     src={img}
                     alt={'ParseImageColorsController img'}
                     onLoad={this.onImgLoad}
+                    onError={this.onImgError(img)}
                 />}
             </div>
         );
