@@ -1,6 +1,6 @@
 {
   "name": "react-image-parser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React image parser component",
   "main": "index.js",
   "scripts": {
