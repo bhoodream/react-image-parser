@@ -22,7 +22,7 @@ class ReactImageParser extends PureComponent {
 
         this.state = {
             img,
-            style: { }
+            style: { display: 'none' }
         };
 
         this.onImgLoad = this.onImgLoad.bind(this);
