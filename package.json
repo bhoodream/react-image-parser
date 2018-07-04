@@ -18,6 +18,9 @@
   ],
   "author": "Vadim Fedorov <bhoodream@yandex.ru>",
   "license": "ISC",
+  "dependencies": {
+    "prop-types": "^15.5.8"
+  },
   "peerDependencies": {
     "react-dom": ">15.0.1",
     "react": ">15.0.1"
