@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import pt from 'prop-types';
 
-import CanvasController from './src/CanvasController';
+import CanvasController from './CanvasController';
 
 class ReactImageParser extends PureComponent {
     static propTypes = {
