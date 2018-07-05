@@ -3,7 +3,7 @@ import pt from 'prop-types';
 
 class CanvasController extends PureComponent {
     static propTypes = {
-        imgElem: pt.instanceOf(Element).isRequired,
+        imgElem: pt.object.isRequired,
         sideSize: pt.number,
         onImageData: pt.func
     };
