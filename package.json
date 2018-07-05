@@ -5,7 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
-    "deploy": "npm run build && git commit -a -m \"update build\" && npm version && npm publish",
+    "deploy:major": "npm run build && git commit -a -m \"update build\" && npm version major && npm publish",
+    "deploy:minor": "npm run build && git commit -a -m \"update build\" && npm version minor && npm publish",
+    "deploy:patch": "npm run build && git commit -a -m \"update build\" && npm version patch && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
