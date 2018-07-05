@@ -22,41 +22,37 @@ class ReactImageParser extends PureComponent {
 
         this.state = {
             img,
+            isImageParsed: false,
             style: { display: 'none' }
         };
-
-        this.onImgLoad = this.onImgLoad.bind(this);
-        this.onImgError = this.onImgError.bind(this);
-        this.imageParsed = this.imageParsed.bind(this);
     }
 
-    imageParsed(data = []) {
+    imageParsed = (data = []) => {
         this.props.onImageParsed(data);
         this.setState({
             isImageParsed: true
         });
-    }
+    };
 
-    onImgLoad(e) {
+    onImgLoad = e => {
         this.setState({
             imgElem: e.target
         });
-    }
+    };
 
-    onImgError(src) {
-        return () => console.error(`react-image-parser: error on load image "${src}"`, );
-    }
+    onImgError = () =>
+        console.error(`react-image-parser: error on load image "${this.state.img}"`, );
 
     render() {
-        const {
-            maxImgSideSize,
-            onImageParsed
-        } = this.props;
         const {
             img,
             imgElem,
             isImageParsed
         } = this.state;
+        const {
+            maxImgSideSize,
+            onImageParsed
+        } = this.props;
 
         if (isImageParsed) {
             return null;
@@ -75,7 +71,7 @@ class ReactImageParser extends PureComponent {
                     src={img}
                     alt={'ParseImageColorsController img'}
                     onLoad={this.onImgLoad}
-                    onError={this.onImgError(img)}
+                    onError={this.onImgError}
                 />}
             </div>
         );

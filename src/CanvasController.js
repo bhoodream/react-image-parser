@@ -3,13 +3,12 @@ import pt from 'prop-types';
 
 class CanvasController extends PureComponent {
     static propTypes = {
-        sideSize: pt.number,
         imgElem: pt.instanceOf(Element).isRequired,
+        sideSize: pt.number,
         onImageData: pt.func
     };
 
     static defaultProps = {
-        imgElem: null,
         onImageData: () => {}
     };
 
@@ -17,8 +16,14 @@ class CanvasController extends PureComponent {
         this.getImageData();
     }
 
-    getCanvasSideSizes(imgElem, sideSize = Math.max(imgElem.naturalWidth, imgElem.naturalHeight)) {
-        const { naturalWidth: width, naturalHeight: height } = imgElem;
+    getCanvasSideSizes() {
+        const {
+            imgElem: {
+                naturalWidth: width,
+                naturalHeight: height
+            },
+            sideSize = Math.max(width, height)
+        } = this.props;
         const widthIsBigger = width > height;
 
         return {
@@ -28,31 +33,20 @@ class CanvasController extends PureComponent {
     }
 
     getImageData() {
-        if (!this.props.imgElem) {
-            console.error('CanvasController: no imgElem!');
-
-            return;
-        }
-
         if (this.props.sideSize <= 0) {
             console.error('CanvasController: sideSize can\'t be lower or equal to zero!');
 
             return;
         }
 
-        const {
-            imgElem,
-            sideSize,
-            onImageData
-        } = this.props;
-        const { width, height } = this.getCanvasSideSizes(imgElem, sideSize);
+        const { width, height } = this.getCanvasSideSizes();
         const ctx = this.canvas.getContext("2d");
         let imageData = [];
 
         this.canvas = Object.assign(this.canvas, { width, height });
 
         ctx.clearRect(0, 0, width, height);
-        ctx.drawImage(imgElem, 0, 0, width, height);
+        ctx.drawImage(this.props.imgElem, 0, 0, width, height);
 
         try {
             imageData = ctx.getImageData(0, 0, width, height).data;
@@ -60,13 +54,11 @@ class CanvasController extends PureComponent {
             console.error('CanvasController: catch error on getImageData!', e);
         }
 
-        onImageData(imageData);
+        this.props.onImageData(imageData);
     }
 
     render() {
-        return <canvas
-            ref={canvas => this.canvas = canvas}
-        />;
+        return <canvas ref={canvas => this.canvas = canvas} />;
     }
 }
 
