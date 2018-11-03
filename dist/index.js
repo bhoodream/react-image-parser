@@ -26,6 +26,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var wrapperStyles = { display: 'none' };
+
 var ReactImageParser = function (_PureComponent) {
     _inherits(ReactImageParser, _PureComponent);
 
@@ -43,7 +45,14 @@ var ReactImageParser = function (_PureComponent) {
         _this.imageParsed = function () {
             var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
-            _this.props.onImageParsed(data);
+            _this.props.onImageParsed({
+                data: data,
+                size: {
+                    width: _this.state.imgElem.naturalWidth,
+                    height: _this.state.imgElem.naturalHeight
+                }
+            });
+
             _this.setState({
                 isImageParsed: true
             });
@@ -56,16 +65,12 @@ var ReactImageParser = function (_PureComponent) {
         };
 
         _this.onImgError = function () {
-            return console.error('react-image-parser: error on load image "' + _this.state.img + '"');
+            return console.error('react-image-parser: error on load image "' + _this.props.img + '"');
         };
 
-        var img = _this.props.img;
-
-
         _this.state = {
-            img: img,
-            isImageParsed: false,
-            style: { display: 'none' }
+            imgElem: null,
+            isImageParsed: false
         };
         return _this;
     }
@@ -74,10 +79,10 @@ var ReactImageParser = function (_PureComponent) {
         key: 'render',
         value: function render() {
             var _state = this.state,
-                img = _state.img,
                 imgElem = _state.imgElem,
                 isImageParsed = _state.isImageParsed;
             var _props = this.props,
+                img = _props.img,
                 maxImgSideSize = _props.maxImgSideSize,
                 onImageParsed = _props.onImageParsed;
 
@@ -90,7 +95,7 @@ var ReactImageParser = function (_PureComponent) {
 
             return _react2.default.createElement(
                 'div',
-                { style: this.state.style },
+                { style: wrapperStyles },
                 shouldParseImage && _react2.default.createElement(_CanvasController2.default, {
                     imgElem: imgElem,
                     sideSize: maxImgSideSize,
@@ -98,7 +103,7 @@ var ReactImageParser = function (_PureComponent) {
                 }),
                 !imgElem && img && _react2.default.createElement('img', {
                     src: img,
-                    alt: 'ParseImageColorsController img',
+                    alt: 'react-image-parser image',
                     onLoad: this.onImgLoad,
                     onError: this.onImgError
                 })

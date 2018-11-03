@@ -3,6 +3,8 @@ import pt from 'prop-types';
 
 import CanvasController from './CanvasController';
 
+const wrapperStyles = { display: 'none' };
+
 class ReactImageParser extends PureComponent {
     static propTypes = {
         img: pt.string.isRequired,
@@ -18,17 +20,21 @@ class ReactImageParser extends PureComponent {
     constructor(...args) {
         super(...args);
 
-        const { img } = this.props;
-
         this.state = {
-            img,
-            isImageParsed: false,
-            style: { display: 'none' }
+            imgElem: null,
+            isImageParsed: false
         };
     }
 
     imageParsed = (data = []) => {
-        this.props.onImageParsed(data);
+        this.props.onImageParsed({
+            data,
+            size: {
+                width: this.state.imgElem.naturalWidth,
+                height: this.state.imgElem.naturalHeight,
+            }
+        });
+
         this.setState({
             isImageParsed: true
         });
@@ -40,16 +46,15 @@ class ReactImageParser extends PureComponent {
         });
     };
 
-    onImgError = () =>
-        console.error(`react-image-parser: error on load image "${this.state.img}"`, );
+    onImgError = () => console.error(`react-image-parser: error on load image "${this.props.img}"`);
 
     render() {
         const {
-            img,
             imgElem,
             isImageParsed
         } = this.state;
         const {
+            img,
             maxImgSideSize,
             onImageParsed
         } = this.props;
@@ -61,7 +66,7 @@ class ReactImageParser extends PureComponent {
         const shouldParseImage = typeof onImageParsed === 'function' && !!imgElem;
 
         return (
-            <div style={this.state.style}>
+            <div style={wrapperStyles}>
                 {shouldParseImage && <CanvasController
                     imgElem={imgElem}
                     sideSize={maxImgSideSize}
@@ -69,7 +74,7 @@ class ReactImageParser extends PureComponent {
                 />}
                 {!imgElem && img && <img
                     src={img}
-                    alt={'ParseImageColorsController img'}
+                    alt={'react-image-parser image'}
                     onLoad={this.onImgLoad}
                     onError={this.onImgError}
                 />}
