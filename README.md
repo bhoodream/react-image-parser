@@ -1,6 +1,10 @@
 # React-Image-Parser
 With this component you can easily parse the image.  
 
+#### Features:
+- get image data;
+- get image size.
+
 #### Install:
 ```bash
 npm i react-image-parser
@@ -38,3 +42,7 @@ import ImageParser from 'react-image-parser';
     size: { width: 100, height: 200 } // image size
 } 
 ```
+
+#### Demo:
+
+For more information and examples check the [demo page](https://vadimfedorov.ru/lab/react-image-parser/).
