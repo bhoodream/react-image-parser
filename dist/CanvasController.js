@@ -49,8 +49,8 @@ var CanvasController = function (_PureComponent) {
             var widthIsBigger = width > height;
 
             return {
-                width: widthIsBigger ? sideSize : sideSize * (width / height),
-                height: widthIsBigger ? sideSize * (height / width) : sideSize
+                width: widthIsBigger ? sideSize : Math.ceil(sideSize * (width / height)),
+                height: widthIsBigger ? Math.ceil(sideSize * (height / width)) : sideSize
             };
         }
     }, {
